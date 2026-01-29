@@ -72,6 +72,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Convert image name to lowercase
+        id: image
+        run: echo "name=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       
@@ -88,8 +92,8 @@ jobs:
           context: ./frontendView
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}/frontend:latest
+            ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}/frontend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
@@ -99,8 +103,8 @@ jobs:
           context: ./backend
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}/backend:latest
+            ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}/backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -119,6 +123,9 @@ jobs:
         
   security-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     
     steps:
       - uses: actions/checkout@v4
@@ -132,7 +139,7 @@ jobs:
           output: 'trivy-results.sarif'
       
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
