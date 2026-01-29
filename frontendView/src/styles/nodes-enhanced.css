@@ -1,0 +1,419 @@
+/* styles/nodes-enhanced.css - Enhanced node styling with color variations */
+
+.base-node {
+  font-family: var(--font-family);
+  transition: all var(--transition-slow);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: auto;
+}
+
+.base-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: inherit;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  display: none;
+}
+
+.base-node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+/* Node Header Section */
+.node-header {
+  position: relative;
+  flex-shrink: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--neutral-900);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  min-height: 45px;
+  width: 100%;
+}
+
+.node-title {
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.node-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  flex-shrink: 0;
+}
+
+/* Node Content Wrapper Section */
+.node-content-wrapper {
+  flex: 1;
+  padding: var(--spacing-md);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-height: 0;
+}
+
+.node-content {
+  color: var(--neutral-800);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.node-content input,
+.node-content select,
+.node-content textarea {
+  transition: all var(--transition-base);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Delete Button */
+.node-delete-btn {
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-sm);
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(244, 67, 54, 0.85);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  opacity: 0;
+  transform: translateY(-50%) scale(0.8);
+  z-index: 20;
+  flex-shrink: 0;
+}
+
+.node-delete-btn:hover {
+  background: #f44336;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+.base-node:hover .node-delete-btn {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Node Handles Section */
+.node-handles-section {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.node-handles-section .react-flow__handle {
+  pointer-events: auto;
+}
+
+/* Form Elements Styling */
+.node-content label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+}
+
+.node-content label div {
+  font-weight: var(--font-weight-semibold);
+  color: var(--neutral-700);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-size: var(--font-size-xs);
+}
+
+.node-content input,
+.node-content select,
+.node-content textarea {
+  border: 1px solid var(--neutral-300);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+}
+
+.node-content input:focus,
+.node-content select:focus,
+.node-content textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background-color: rgba(102, 126, 234, 0.02);
+}
+
+.node-content textarea {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  min-height: 50px;
+  resize: vertical;
+  background-color: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+}
+
+/* Node Color Variants */
+.node-input {
+  border-color: var(--node-input-color);
+}
+
+.node-input .node-header {
+  background: linear-gradient(135deg, #FF6B6B 0%, #EE5A52 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.node-output {
+  border-color: var(--node-output-color);
+}
+
+.node-output .node-header {
+  background: linear-gradient(135deg, #20C997 0%, #12B886 100%);
+}
+
+.node-output .node-title {
+  background: linear-gradient(135deg, #20C997 0%, #12B886 100%);
+}
+
+.node-llm {
+  border-color: var(--node-llm-color);
+}
+
+.node-llm .node-header {
+  background: linear-gradient(135deg, #FFE66D 0%, #FFD93D 100%);
+  color: var(--neutral-900);
+}
+
+.node-text {
+  border-color: var(--node-text-color);
+}
+
+.node-text .node-header {
+  background: linear-gradient(135deg, #95E1D3 0%, #5DD9C1 100%);
+  color: var(--neutral-900);
+}
+
+.node-calculator {
+  border-color: var(--node-calculator-color);
+}
+
+.node-calculator .node-header {
+  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+}
+
+.node-conditional {
+  border-color: var(--node-conditional-color);
+}
+
+.node-conditional .node-header {
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+}
+
+.node-email {
+  border-color: var(--node-email-color);
+}
+
+.node-email .node-header {
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+}
+
+.node-filter {
+  border-color: var(--node-filter-color);
+}
+
+.node-filter .node-header {
+  background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+}
+
+.node-database {
+  border-color: var(--node-database-color);
+}
+
+.node-database .node-header {
+  background: linear-gradient(135deg, #F44336 0%, #D32F2F 100%);
+}
+
+/* Node Variables Badge */
+.node-variables-badge {
+  background: var(--neutral-100);
+  color: var(--neutral-700);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--spacing-md);
+  word-break: break-word;
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Handle Styling */
+.react-flow__handle {
+  background-color: var(--primary-color);
+  border: 2px solid white;
+  width: 13px;
+  height: 17px;
+  transition: all var(--transition-base);
+}
+
+.react-flow__handle:hover {
+  width: 16px;
+  height: 20px;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+}
+
+.react-flow__handle.connectingFrom {
+  background-color: var(--primary-light);
+  box-shadow: 0 0 12px rgba(102, 126, 234, 0.8);
+}
+
+/* Connection Line Styling */
+.react-flow__edge {
+  stroke-width: 2;
+}
+
+.react-flow__edge.animated {
+  stroke-dasharray: 5;
+  animation: dash 0.5s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+.react-flow__edge.selected {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px rgba(102, 126, 234, 0.4));
+}
+
+/* Node Container */
+.node-container {
+  padding: 0;
+  border-radius: 13px;
+  border: 4px solid #101011ee;
+  background-color: white;
+  min-width: 200px;
+  font-family: var(--font-family);
+  transition: all var(--transition-slow);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.node-container:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Accessible Node */
+.node-container:focus-within {
+  outline-offset: 2px;
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+  .node-header {
+    min-height: 40px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .node-title {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .node-content-wrapper {
+    padding: var(--spacing-sm);
+  }
+
+  .node-content input,
+  .node-content select,
+  .node-content textarea {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .node-container {
+    min-width: 160px;
+  }
+
+  .node-header {
+    min-height: 36px;
+  }
+
+  .node-title {
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .node-content-wrapper {
+    padding: var(--spacing-xs);
+  }
+
+  .node-content {
+    gap: 6px;
+  }
+
+  .node-delete-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .node-container {
+    min-width: 140px;
+  }
+
+  .node-title {
+    font-size: 10px;
+  }
+
+  .node-content input,
+  .node-content select,
+  .node-content textarea {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+
+  .node-content label div {
+    font-size: 9px;
+  }
+}
