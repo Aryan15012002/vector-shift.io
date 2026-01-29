@@ -45,13 +45,13 @@ export const TextNode = ({ id, data }) => {
     const lineHeight = 20;
 
     const lines = Math.ceil(currText.length / charsPerLine) || 1;
-    const width = Math.max(baseWidth, Math.min(currText.split('\n').reduce((max, line) => Math.max(max, line.length), 0) * 8 + 40, 400));
-    const height = Math.max(baseHeight, 80 + lines * lineHeight + variableHandles.length * 15);
+    getNodeDimensions();
 
-    return { width, height };
+    return { width: Math.max(baseWidth, Math.min(currText.split('\n').reduce((max, line) => Math.max(max, line.length), 0) * 8 + 40, 400)), height: Math.max(baseHeight, 80 + lines * lineHeight + variableHandles.length * 15) };
   };
 
-  const { width, height } = getNodeDimensions();
+  // Dimensions calculated but handled by ReactFlow auto-sizing
+  getNodeDimensions();
 
   const content = (
     <div className="flex-col gap-sm">
